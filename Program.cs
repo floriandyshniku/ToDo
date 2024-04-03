@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
+using System.Text;
 using Todo.AppData;
-using Todo.Model;
+using Todo.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +16,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDBContext>(options =>
-    options.UseSqlServer("Data Source=DESKTOP-H84B3N0\\SQLEXPRESS;Initial Catalog=ToDo;Integrated Security=True;Trust Server Certificate=True")
+    options.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings:DefaultConnection").Value)
    );
-builder.Services.AddIdentity<User, IdentityRole>(
+
+builder.Services.AddControllers().AddNewtonsoftJson(o =>
+    o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
+    .AddNewtonsoftJson(o => o.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(
      o =>
      {
          o.Password.RequiredUniqueChars = 0;
@@ -23,11 +31,32 @@ builder.Services.AddIdentity<User, IdentityRole>(
          o.Password.RequiredLength = 8;
          o.Password.RequireNonAlphanumeric = false;
     })
-    .AddEntityFrameworkStores<AppDBContext>().AddDefaultTokenProviders();
+    .AddEntityFrameworkStores<AppDBContext>()
+    .AddDefaultTokenProviders();
+builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddAuthentication(o =>
+    {
+        o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(
+        o => o.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateActor = true,
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            RequireExpirationTime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration.GetSection("Jwt:Issuer").Value,
+            ValidAudience = builder.Configuration.GetSection("Jwt:Audience").Value,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value)),
+        }
+    );
+
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -35,7 +64,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+                                                                                     
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

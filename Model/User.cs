@@ -7,6 +7,9 @@ namespace Todo.Model
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
+        public DateTime? CreatedDate { get; set; }
+        public List<ToDo> ToDoItems { get; set; } = [];
 
     }
 }

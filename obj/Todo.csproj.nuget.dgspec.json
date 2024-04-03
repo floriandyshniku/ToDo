@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\AG\\source\\repos\\Todo\\Todo\\Todo.csproj": {}
+    "C:\\Users\\dyshn\\OneDrive\\Desktop\\ToDo\\Todo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\AG\\source\\repos\\Todo\\Todo\\Todo.csproj": {
+    "C:\\Users\\dyshn\\OneDrive\\Desktop\\ToDo\\Todo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\AG\\source\\repos\\Todo\\Todo\\Todo.csproj",
+        "projectUniqueName": "C:\\Users\\dyshn\\OneDrive\\Desktop\\ToDo\\Todo.csproj",
         "projectName": "Todo",
-        "projectPath": "C:\\Users\\AG\\source\\repos\\Todo\\Todo\\Todo.csproj",
-        "packagesPath": "C:\\Users\\AG\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\AG\\source\\repos\\Todo\\Todo\\obj\\",
+        "projectPath": "C:\\Users\\dyshn\\OneDrive\\Desktop\\ToDo\\Todo.csproj",
+        "packagesPath": "C:\\Users\\dyshn\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dyshn\\OneDrive\\Desktop\\ToDo\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\AG\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\dyshn\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,8 +22,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://sitecore.myget.org/F//sc-packages/api/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
@@ -50,9 +46,17 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.3, )"
+            },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
