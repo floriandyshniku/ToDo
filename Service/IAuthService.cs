@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Todo.AppData;
 using Todo.Request;
 
 namespace Todo.Service

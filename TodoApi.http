@@ -1,5 +1,5 @@
 
-@ACCESS_JWT=eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJkeXNobmlrdWZsb3JpQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6InVzZXIiLCJleHAiOjE3MTIxNTkzMDgsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwOTAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUxOTkifQ.a_1TZgnpT_t-nsxYmaYLGMqte8AWvgMj-m5s5MeM7RG8K6kIMUpnUxSIMynBg5YZmS7CHPZchTsPdWQut2Kb2g
+@ACCESS_JWT=eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTUxMiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJkeXNobmlrdWZsb3JpQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6InVzZXIiLCJleHAiOjE3MTIyMzMyMjEsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjcwOTAiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjUxOTkifQ.aJsBcGdNXfBAp0Wky-q4ft73rlHQceDQ_ailnWzNS03qC4CinV_MrXsLEh_2B62T8hCNVFqD5YhlcWEi72S9lA
 
 POST https://localhost:7090/api/Auth/register
 Content-Type: application/json
@@ -7,7 +7,7 @@ Content-Type: application/json
 {
   "firstName": "Flori",
   "lastName": "Dyshniku",
-  "email": "dyshnikuflorii@gmail.com",
+  "email": "dyshnikuflori@gmail.com",
   "password": "florian1"
 }
 ###
@@ -43,11 +43,11 @@ Content-Type: application/json
 
 {
   "userEmail": "dyshnikuflori@gmail.com",
-  "toDoId": 2,
+  "toDoId": 8,
   "title": "UpdatedItem",
   "isCompleted": true
 }
 ###
-DELETE https://localhost:7090/api/User/deleteToDoItem/5/dyshnikuflori@gmail.com
+DELETE https://localhost:7090/api/User/deleteToDoItem/8/dyshnikuflori@gmail.com
 Authorization: Bearer {{ACCESS_JWT}}
 Content-Type: application/json

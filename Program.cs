@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using System.Text;
@@ -33,6 +34,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(
     })
     .AddEntityFrameworkStores<AppDBContext>()
     .AddDefaultTokenProviders();
+builder.Services.Configure<JwtOption>(builder.Configuration.GetSection(JwtOption.Jwt));
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddAuthentication(o =>

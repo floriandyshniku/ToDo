@@ -1,10 +1,12 @@
 ﻿
 
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Todo.AppData;
 using LoginRequest = Todo.Request.LoginRequest;
 
 namespace Todo.Service
@@ -13,13 +15,20 @@ namespace Todo.Service
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<AuthService> _logger; 
-        private readonly IConfiguration config; 
+        private readonly IConfiguration config;
+        private readonly IOptionsMonitor<JwtOption> options;
+        private const string UserRole = "user";
 
-        public AuthService(UserManager<IdentityUser> userManager, ILogger<AuthService> logger, IConfiguration configuration)
+        public AuthService(UserManager<IdentityUser> userManager, 
+                                       ILogger<AuthService> logger, 
+                                       IConfiguration configuration,
+                                       IOptionsMonitor<JwtOption> options)
+
         {
             _userManager = userManager;
             _logger = logger; 
             config = configuration;
+            this.options = options;
         }
         public async Task<bool> Login(LoginRequest request)
         {
@@ -52,18 +61,22 @@ namespace Todo.Service
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, request.Username),
-                new Claim(ClaimTypes.Role, "user"),
+                new (ClaimTypes.Email, request.Username),
+                new (ClaimTypes.Role, UserRole),
             };
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("B623D7FB-DB87-44B4-B597-5F65C6EF791B18DAE64D-B3DD-49CF-BF9C-53F72A2F252B"));
+            _logger.LogInformation($"Key {options.CurrentValue.Key}");
+
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.CurrentValue.Issuer));
             SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha512Signature);
+
+            _logger.LogInformation($"Key {}");
 
             var securityToken = new JwtSecurityToken(
                 claims:claims,
                 expires:DateTime.Now.AddMinutes(60),
-                issuer:config.GetSection("Jwt:Issuer").Value,
-                audience: config.GetSection("Jwt:Audience").Value,
+                issuer:config.GetSection(options.CurrentValue.Issuer).Value,
+                audience: config.GetSection(options.CurrentValue.Audience).Value,
                 signingCredentials: signingCredentials
                 );
             string token = new JwtSecurityTokenHandler().WriteToken(securityToken);
