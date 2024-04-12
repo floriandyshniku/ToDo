@@ -67,7 +67,7 @@ namespace Todo.Service
 
             _logger.LogInformation($"Key {options.CurrentValue.Key}");
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.CurrentValue.Issuer));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.CurrentValue.Key));
             SigningCredentials signingCredentials = new(securityKey, SecurityAlgorithms.HmacSha512Signature);
 
             _logger.LogInformation($"Key {}");
